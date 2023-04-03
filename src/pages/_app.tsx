@@ -1,23 +1,46 @@
-import { type AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import {
+  type Session,
+  SessionContextProvider,
+} from "@supabase/auth-helpers-react";
+import { type AppProps } from "next/app";
+import { useEffect, useState } from "react";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import Layout from "~/components/Layout";
 
-const MyApp: AppType<{ session: Session | null }> = ({
+function MyApp({
   Component,
-  pageProps: { session, ...pageProps },
-}) => {
+  pageProps,
+}: AppProps<{
+  initialSession: Session;
+}>) {
+  // Create a new supabase browser client on every first render.
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
+  useEffect(() => {
+    supabaseClient.auth
+      .getSession()
+      .then((session) => {
+        console.log(session);
+      })
+      .finally(() => {
+        console.log("finally");
+      });
+  }, []);
+
   return (
-    <SessionProvider session={session}>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </SessionProvider>
+    </SessionContextProvider>
   );
-};
+}
 
 export default api.withTRPC(MyApp);

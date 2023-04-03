@@ -1,26 +1,8 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Brand from "../Brand";
-import { useSession, signIn, signOut } from "next-auth/react";
-
-function Login() {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user.name} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
-  return (
-    <>
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  );
-}
+import { Login } from "./login";
 
 const Navbar = () => {
   const [state, setState] = useState(false);
@@ -53,11 +35,12 @@ const Navbar = () => {
   return (
     <header>
       <nav
-        className={`bg-white w-full md:static md:text-sm ${state ? "fixed z-10 h-full" : ""
-          }`}
+        className={`w-full bg-white md:static md:text-sm ${
+          state ? "fixed z-10 h-full" : ""
+        }`}
       >
-        <div className="custom-screen items-center mx-auto md:flex">
-          <div className="flex items-center justify-between py-3 md:py-5 md:block">
+        <div className="custom-screen mx-auto items-center md:flex">
+          <div className="flex items-center justify-between py-3 md:block md:py-5">
             <Brand />
             <div className="md:hidden">
               <button
@@ -86,7 +69,7 @@ const Navbar = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="h-6 w-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -99,10 +82,11 @@ const Navbar = () => {
             </div>
           </div>
           <div
-            className={`flex-1 pb-3 mt-8 md:pb-0 md:mt-0 md:block ${state ? "" : "hidden"
-              }`}
+            className={`mt-8 flex-1 pb-3 md:mt-0 md:block md:pb-0 ${
+              state ? "" : "hidden"
+            }`}
           >
-            <ul className="text-gray-700 justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0 md:text-gray-600 md:font-medium">
+            <ul className="items-center justify-end space-y-6 text-gray-700 md:flex md:space-x-6 md:space-y-0 md:font-medium md:text-gray-600">
               {navigation.map((item, idx) => {
                 return (
                   <li key={idx} className="duration-150 hover:text-gray-900">
@@ -112,15 +96,7 @@ const Navbar = () => {
                   </li>
                 );
               })}
-              <li className="py-2.5 px-4 text-center rounded-lg duration-150 block font-medium text-sm text-white bg-gray-800 hover:bg-gray-600 active:bg-gray-900 md:inline">
-                <Login />
-                {/* <NavLink
-                  href="/get-started"
-                  className="block font-medium text-sm text-white bg-gray-800 hover:bg-gray-600 active:bg-gray-900 md:inline"
-                >
-                  Let's work
-                </NavLink> */}
-              </li>
+              <Login />
             </ul>
           </div>
         </div>

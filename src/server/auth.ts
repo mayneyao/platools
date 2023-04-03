@@ -8,7 +8,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
-// import NotionProvider from "@auth/core/providers/notion"
+import NotionProvider from "@auth/core/providers/notion"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -47,15 +47,16 @@ export const authOptions: NextAuthOptions = {
     },
   },
   adapter: PrismaAdapter(prisma),
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   providers: [
-    // NotionProvider({
-    //   clientId: process.env.NOTION_CLIENT_ID,
-    //   clientSecret: process.env.NOTION_CLIENT_SECRET,
-    //   redirectUri: process.env.NOTION_REDIRECT_URI,
-    // }),
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+    }),
+    NotionProvider({
+      clientId: env.NOTION_CLIENT_ID,
+      clientSecret: env.NOTION_CLIENT_SECRET,
+      redirectUri: "http://localhost:3000/api/auth/callback/notion"
     }),
     /**
      * ...add more providers here.
@@ -66,7 +67,7 @@ export const authOptions: NextAuthOptions = {
      *
      * @see https://next-auth.js.org/providers/github
      */
-  ],
+  ] as any,
 };
 
 /**

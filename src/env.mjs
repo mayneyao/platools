@@ -16,7 +16,7 @@ const server = z.object({
     // Since NextAuth.js automatically uses the VERCEL_URL if present.
     (str) => process.env.VERCEL_URL ?? str,
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string().min(1) : z.string().url(),
+    process.env.VERCEL ? z.string().min(1) : z.string().url()
   ),
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
   DISCORD_CLIENT_ID: z.string(),
@@ -27,6 +27,17 @@ const server = z.object({
 
   NOTION_CLIENT_ID: z.string(),
   NOTION_CLIENT_SECRET: z.string(),
+
+  // upstash
+  UPSTASH_URL: z.string(),
+  UPSTASH_TOKEN: z.string(),
+
+  // supabase
+  NEXT_PUBLIC_SUPABASE_URL: z.string(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
+
+  // vika
+  VIKA_TOKEN: z.string(),
 });
 
 /**
@@ -55,6 +66,11 @@ const processEnv = {
   FIGMA_SECRET: process.env.FIGMA_SECRET,
   NOTION_CLIENT_ID: process.env.NOTION_CLIENT_ID,
   NOTION_CLIENT_SECRET: process.env.NOTION_CLIENT_SECRET,
+  UPSTASH_URL: process.env.UPSTASH_URL,
+  UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
+  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  VIKA_TOKEN: process.env.VIKA_TOKEN,
 };
 
 // Don't touch the part below
@@ -80,7 +96,7 @@ if (!!process.env.SKIP_ENV_VALIDATION == false) {
   if (parsed.success === false) {
     console.error(
       "❌ Invalid environment variables:",
-      parsed.error.flatten().fieldErrors,
+      parsed.error.flatten().fieldErrors
     );
     throw new Error("Invalid environment variables");
   }
@@ -94,7 +110,7 @@ if (!!process.env.SKIP_ENV_VALIDATION == false) {
         throw new Error(
           process.env.NODE_ENV === "production"
             ? "❌ Attempted to access a server-side environment variable on the client"
-            : `❌ Attempted to access server-side environment variable '${prop}' on the client`,
+            : `❌ Attempted to access server-side environment variable '${prop}' on the client`
         );
       return target[/** @type {keyof typeof target} */ (prop)];
     },
