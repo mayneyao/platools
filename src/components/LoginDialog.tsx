@@ -13,6 +13,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { type Database } from "~/lib/database.types";
+import { getRedirectURL } from "~/utils/getRedirectUrl";
+
+const redirectTo = getRedirectURL();
 
 export function LoginDialog() {
   const supabaseClient = useSupabaseClient<Database>();
@@ -31,7 +34,7 @@ export function LoginDialog() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <Auth
-            redirectTo="http://localhost:3000/?writeKey=123"
+            redirectTo={redirectTo}
             appearance={{ theme: ThemeSupa }}
             supabaseClient={supabaseClient}
             providers={["notion"]}
