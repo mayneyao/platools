@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { type GetServerSidePropsContext } from "next";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { type IValidateLicenseResponse, LmSqueezy } from "~/server/license";
+import { LmSqueezy, type IValidateLicenseResponse } from "~/server/license";
 import { api } from "~/utils/api";
 
 export const Welcome = (props: IValidateLicenseResponse) => {
@@ -27,7 +28,7 @@ export const Welcome = (props: IValidateLicenseResponse) => {
   return (
     <div className="mt-16 text-center">
       <h1 className="mb-8 text-3xl">
-        Welcome to Purchase{" "}
+        Thank you for purchasing{" "}
         <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text font-bold text-transparent">
           {productName}
         </span>{" "}
@@ -48,6 +49,19 @@ export const getServerSideProps = async (
     licenseKey: string;
   }>
 ) => {
+  const supabase = createServerSupabaseClient(context);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const returnUrl = context.req.url || "";
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login?returnUrl=" + encodeURIComponent(returnUrl),
+        permanent: false,
+      },
+    };
+  }
   const licenseKey = context.query?.licenseKey;
   const lm = new LmSqueezy();
   if (licenseKey) {

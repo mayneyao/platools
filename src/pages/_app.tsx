@@ -24,12 +24,12 @@ function MyApp({
     supabaseClient.auth
       .getSession()
       .then((session) => {
-        console.log(session);
+        // console.log(session);
       })
       .finally(() => {
-        console.log("finally");
+        // console.log("finally");
       });
-  }, []);
+  }, [supabaseClient.auth]);
 
   return (
     <SessionContextProvider
