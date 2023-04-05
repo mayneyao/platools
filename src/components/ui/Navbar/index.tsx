@@ -9,6 +9,7 @@ const Navbar = () => {
   const { events } = useRouter();
 
   const navigation = [
+    { title: "Pricing", path: "#pricing" },
     { title: "Features", path: "#features" },
     {
       title: "Docs",

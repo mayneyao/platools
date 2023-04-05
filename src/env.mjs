@@ -23,9 +23,12 @@ const server = z.object({
   // supabase
   NEXT_PUBLIC_SUPABASE_URL: z.string(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
+  SUPABASE_SERVER_KEY: z.string(),
 
   // vika
   VIKA_TOKEN: z.string(),
+  //
+  LEMON_SQUEEZY_KEY: z.string(),
 });
 
 /**
@@ -55,7 +58,9 @@ const processEnv = {
   UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
   NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  SUPABASE_SERVER_KEY: process.env.SUPABASE_SERVER_KEY,
   VIKA_TOKEN: process.env.VIKA_TOKEN,
+  LEMON_SQUEEZY_KEY: process.env.LEMON_SQUEEZY_KEY,
 };
 
 // Don't touch the part below

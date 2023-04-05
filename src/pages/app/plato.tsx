@@ -1,9 +1,9 @@
 import Head from "next/head";
-import GradientWrapper from "../components/GradientWrapper";
-import Features from "../components/ui/Features";
-import FooterCTA from "../components/ui/FooterCTA";
-import Hero from "../components/ui/Hero";
-import ToolKit from "../components/ui/ToolKit";
+import GradientWrapper from "@/components/GradientWrapper";
+import Features from "@/components/ui/Features";
+import FooterCTA from "@/components/ui/FooterCTA";
+import Hero from "@/components/ui/Hero";
+import ToolKit from "@/components/ui/ToolKit";
 import { Pricing } from "~/components/ui/Pricing";
 
 export default function Home() {
@@ -24,9 +24,7 @@ export default function Home() {
       <GradientWrapper>
         <Pricing />
       </GradientWrapper>
-      <GradientWrapper>
-        <FooterCTA />
-      </GradientWrapper>
+      <FooterCTA />
     </>
   );
 }

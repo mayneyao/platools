@@ -1,165 +1,113 @@
-import CheckIcon from "../../../public/icons/checkout.svg";
+import { Button } from "../button";
 
+const PlanConfig = [
+  {
+    title: "Free",
+    description: "It's free forever!",
+    price: "$0",
+    upgradeLink: "",
+    features: [
+      {
+        title: "usage limits",
+        description: "3 databases, mock database 3 rows",
+      },
+      {
+        title: "add rows to mock database",
+        isSupported: false,
+      },
+    ],
+  },
+  {
+    title: "Lifetime Access",
+    description: "One time payment, unlock all features",
+    price: "$9.99",
+    upgradeLink:
+      "https://platools.lemonsqueezy.com/checkout/buy/a62339fb-52a6-4ccf-8f13-b915a42f7910",
+    features: [
+      {
+        title: "usage limits",
+        description: "unlimited databases, mock database 100 rows",
+        isSupported: true,
+      },
+      {
+        title: "add rows to mock database",
+        isSupported: true,
+      },
+    ],
+  },
+];
 
-const Pricing = () => {
+export const Pricing = () => {
   return (
     <section className="bg-white" id="pricing">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
-            Designed for business teams like yours
-          </h2>
-          <p className="mb-5 font-light text-gray-500 sm:text-xl ">
-            Here at Flowbite we focus on markets where technology, innovation,
-            and capital can unlock long-term value and drive economic growth.
-          </p>
+      <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
+        <div className="mx-auto mb-8 max-w-screen-md text-center lg:mb-12">
+          {/* <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 ">
+            Price
+          </h2> */}
+          {/* <p className="mb-5 font-light text-gray-500 sm:text-xl ">
+            {`It's free to use with some limitations. If you want to use Plato without limitations, you can purchase a lifetime access for $9.99.`}
+          </p> */}
+          <table className="table-auto border-collapse border border-slate-400">
+            <thead>
+              <tr>
+                <th className="border border-slate-300"></th>
+                {PlanConfig.map((plan) => {
+                  return (
+                    <th
+                      key={plan.title}
+                      className="border border-slate-300 p-2 md:truncate"
+                    >
+                      <p className="text-3xl">{plan.title}</p>
+                      <p className="opacity-50 ">{plan.description}</p>
+                      <div className="text-2xl">{plan.price}</div>
+                      {plan.upgradeLink && (
+                        <a href={plan.upgradeLink}>
+                          <Button
+                            variant={plan.upgradeLink ? "default" : "outline"}
+                            disabled={!plan.upgradeLink}
+                          >
+                            Upgrade
+                          </Button>
+                        </a>
+                      )}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {PlanConfig[0]?.features.map((feature, fIndex) => {
+                return (
+                  <tr key={feature.title}>
+                    <td className="border border-slate-300 p-4 md:truncate">
+                      {feature.title}
+                    </td>
+                    {PlanConfig.map((plan) => {
+                      const planFeature = plan.features[fIndex];
+                      return (
+                        <td
+                          key={plan.title}
+                          className="border border-slate-300 p-4 md:truncate"
+                        >
+                          {planFeature?.description ? (
+                            <p>{planFeature.description}</p>
+                          ) : planFeature?.isSupported ? (
+                            "✅"
+                          ) : (
+                            "❌"
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-        <div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-          <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow ">
-            <h3 className="mb-4 text-2xl font-semibold">Starter</h3>
-            <p className="font-light text-gray-500 sm:text-lg ">
-              Best option for personal use & for your next project.
-            </p>
-            <div className="flex justify-center items-baseline my-8">
-              <span className="mr-2 text-5xl font-extrabold">$29</span>
-              <span className="text-gray-500 ">/month</span>
-            </div>
-            <ul role="list" className="mb-8 space-y-4 text-left">
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>Individual configuration</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>No setup, or hidden fees</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Team size: <span className="font-semibold">1 developer</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Premium support:{" "}
-                  <span className="font-semibold">6 months</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Free updates: <span className="font-semibold">6 months</span>
-                </span>
-              </li>
-            </ul>
-            <a
-              href="#"
-              className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-            >
-              Get started
-            </a>
-          </div>
-
-          <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow ">
-            <h3 className="mb-4 text-2xl font-semibold">Company</h3>
-            <p className="font-light text-gray-500 sm:text-lg ">
-              Relevant for multiple users, extended & premium support.
-            </p>
-            <div className="flex justify-center items-baseline my-8">
-              <span className="mr-2 text-5xl font-extrabold">$99</span>
-              <span className="text-gray-500 ">/month</span>
-            </div>
-
-            <ul role="list" className="mb-8 space-y-4 text-left">
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>Individual configuration</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>No setup, or hidden fees</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Team size:{" "}
-                  <span className="font-semibold">10 developers</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Premium support:{" "}
-                  <span className="font-semibold">24 months</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Free updates: <span className="font-semibold">24 months</span>
-                </span>
-              </li>
-            </ul>
-            <a
-              href="#"
-              className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-            >
-              Get started
-            </a>
-          </div>
-
-          <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow ">
-            <h3 className="mb-4 text-2xl font-semibold">Enterprise</h3>
-            <p className="font-light text-gray-500 sm:text-lg ">
-              Best for large scale uses and extended redistribution rights.
-            </p>
-            <div className="flex justify-center items-baseline my-8">
-              <span className="mr-2 text-5xl font-extrabold">$499</span>
-              <span className="text-gray-500 ">/month</span>
-            </div>
-
-            <ul role="list" className="mb-8 space-y-4 text-left">
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>Individual configuration</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>No setup, or hidden fees</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Team size:{" "}
-                  <span className="font-semibold">100+ developers</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Premium support:{" "}
-                  <span className="font-semibold">36 months</span>
-                </span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <CheckIcon />
-                <span>
-                  Free updates: <span className="font-semibold">36 months</span>
-                </span>
-              </li>
-            </ul>
-            <a
-              href="#"
-              className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-            >
-              Get started
-            </a>
-          </div>
-        </div>
+        <div className="space-y-8 sm:gap-6 lg:grid lg:grid-cols-2 lg:space-y-0 xl:gap-10"></div>
       </div>
     </section>
   );
 };
-
-export default Pricing;

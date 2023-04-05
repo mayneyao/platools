@@ -33,6 +33,7 @@ export interface Database {
         Row: {
           created_at: string | null
           id: number
+          license_key: string | null
           paid: boolean
           product_id: number
           user_id: string
@@ -40,6 +41,7 @@ export interface Database {
         Insert: {
           created_at?: string | null
           id?: number
+          license_key?: string | null
           paid: boolean
           product_id: number
           user_id: string
@@ -47,6 +49,7 @@ export interface Database {
         Update: {
           created_at?: string | null
           id?: number
+          license_key?: string | null
           paid?: boolean
           product_id?: number
           user_id?: string

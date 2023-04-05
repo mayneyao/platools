@@ -14,10 +14,12 @@
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
+import { createServerSupabaseClient, type SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
-
 // import { getServerAuthSession } from "~/server/auth";
+
+
+type Session = Awaited<ReturnType<SupabaseClient['auth']['getSession']>>['data']['session']
 
 type CreateContextOptions = {
   session: Session | null;
@@ -34,6 +36,7 @@ type CreateContextOptions = {
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
+
   return {
     session: opts.session,
   };
@@ -45,13 +48,13 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: CreateNextContextOptions) => {
+export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
-
+  const supabase = createServerSupabaseClient({ req, res });
+  const session = await supabase.auth.getSession();
   // Get the session from the server using the getServerSession wrapper function
-
   return createInnerTRPCContext({
-    session: null
+    session: session.data.session
   });
 };
 
@@ -62,9 +65,10 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-import { initTRPC, TRPCError } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
