@@ -32,6 +32,7 @@
     "@vikadata/vika": "^1.1.5",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
+    "cors": "^2.8.5",
     "lucide-react": "^0.129.0",
     "next": "^13.2.4",
     "next-auth": "^4.20.1",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",
+    "@types/cors": "^2.8.13",
     "@types/eslint": "^8.21.3",
     "@types/node": "^18.15.5",
     "@types/prettier": "^2.7.2",
