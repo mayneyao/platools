@@ -5,6 +5,7 @@ import {
 } from "@supabase/auth-helpers-react";
 import { type AppProps } from "next/app";
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import { api } from "~/utils/api";
 
@@ -38,6 +39,7 @@ function MyApp({
     >
       <Layout>
         <Component {...pageProps} />
+        <Analytics />
       </Layout>
     </SessionContextProvider>
   );
