@@ -29,6 +29,10 @@ const server = z.object({
   VIKA_TOKEN: z.string(),
   //
   LEMON_SQUEEZY_KEY: z.string(),
+
+  // 
+
+  OPENAI_API_KEY: z.string(),
 });
 
 /**
@@ -61,6 +65,7 @@ const processEnv = {
   SUPABASE_SERVER_KEY: process.env.SUPABASE_SERVER_KEY,
   VIKA_TOKEN: process.env.VIKA_TOKEN,
   LEMON_SQUEEZY_KEY: process.env.LEMON_SQUEEZY_KEY,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 };
 
 // Don't touch the part below
