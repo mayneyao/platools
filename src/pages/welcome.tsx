@@ -20,7 +20,7 @@ export const Welcome = (props: IValidateLicenseResponse) => {
       setCanActive(false);
     }
   };
-  if (props.error) {
+  if (props.error || !props.meta) {
     return <div className="mt-16 text-center">oops, something went wrong</div>;
   }
 

@@ -17,6 +17,7 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { LogOut, Package2, Settings, User } from "lucide-react";
 import { LoginDialog } from "~/components/LoginDialog";
 import { type Database } from "~/lib/database.types";
+import { useRouter } from "next/router";
 
 export function Login() {
   const supabaseClient = useSupabaseClient<Database>();
@@ -25,6 +26,12 @@ export function Login() {
     await supabaseClient.auth.signOut();
     // session.signOut();
   };
+
+  const router = useRouter();
+  const activeProduct = () => {
+    void router.push("/active");
+  };
+
   const user = useUser();
 
   if (user) {
@@ -50,9 +57,9 @@ export function Login() {
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem disabled>
+            <DropdownMenuItem onClick={activeProduct}>
               <Package2 className="mr-2 h-4 w-4" />
-              <span>Apps</span>
+              <span>Active Product</span>
             </DropdownMenuItem>
             <DropdownMenuItem disabled>
               <Settings className="mr-2 h-4 w-4" />
